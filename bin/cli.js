@@ -46,13 +46,19 @@ async function main() {
 
 function copyDir(src, dest) {
     fs.mkdirSync(dest, { recursive: true });
+
     for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
         const srcPath = path.join(src, entry.name);
         const destPath = path.join(dest, entry.name);
+
         if (entry.isDirectory()) {
+            // Always create the directory, even if empty
             copyDir(srcPath, destPath);
         } else {
-            fs.copyFileSync(srcPath, destPath);
+            // Skip copying .empty marker
+            if (entry.name !== ".empty") {
+                fs.copyFileSync(srcPath, destPath);
+            }
         }
     }
 }
