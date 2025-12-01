@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function main() {
-    console.log("Welcome to Chilibase project generator.");
+    console.log("Welcome to Chilibase project generator - localhost 4.");
 
     // Grab project name from CLI args
     const args = process.argv.slice(2);
@@ -35,30 +35,27 @@ async function main() {
     fs.mkdirSync(projectDir, { recursive: true });
 
     const templateDir = path.join(__dirname, "..", "template");
-    copyDir(templateDir, projectDir);
+    copyDir(templateDir, projectDir, {projectName: projectName});
 
     console.log(`   Chilibase project created in ${projectDir}`);
     console.log(`   Next steps:`);
     console.log(``);
-    console.log(`   cd ${projectName}`);
-    console.log(`   pnpm install`);
-    console.log(``);
     console.log(`   create postgres database`);
-    console.log(`   create framework tables/db content using script backend/src/sql_scripts/create_tables_x.sql`);
-    console.log(`   configure backend in backend/.env`);
+    console.log(`   create framework tables/db content using script ${projectName}/backend/src/sql_scripts/create_tables_x.sql`);
+    console.log(`   configure backend in ${projectName}/backend/.env`);
+    console.log(`   configure frontend in ${projectName}/frontend/.env`);
     console.log(``);
-    console.log(`   cd backend`);
-    console.log(`   pnpm run start-tsc-b`);
+    console.log(`   cd ${projectName}/backend`);
+    console.log(`   pnpm install`);
+    console.log(`   pnpm run start:dev`);
     console.log(``);
-    console.log(`   in the case that the module common is used (there is some code inside the module common)`);
-    console.log(`   cd ../common`);
-    console.log(`   pnpm run build`);
-    console.log(``);
-    console.log(`   cd ../frontend`);
+    console.log(`   (in other command line)`);
+    console.log(`   cd ${projectName}/frontend`);
+    console.log(`   pnpm install`);
     console.log(`   pnpm run dev`);
 }
 
-function copyDir(src, dest) {
+function copyDir(src, dest, variables = {}) {
     fs.mkdirSync(dest, { recursive: true });
 
     for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
@@ -69,15 +66,31 @@ function copyDir(src, dest) {
 
         if (entry.isDirectory()) {
             // Always create the directory, even if empty
-            copyDir(srcPath, destPath);
+            copyDir(srcPath, destPath, variables);
         } else {
             // Skip copying .empty marker
             // .empty files are used because empty directories are not published (property of command publish)
             if (entry.name !== ".empty") {
-                fs.copyFileSync(srcPath, destPath);
+                //fs.copyFileSync(srcPath, destPath);
+
+                // read file as text
+                let content = fs.readFileSync(srcPath, "utf8");
+
+                // replace {{variable}} placeholders
+                content = replaceVariables(content, variables);
+
+                // write processed content
+                fs.writeFileSync(destPath, content);
             }
         }
     }
+}
+
+function replaceVariables(content, vars) {
+    for (const [varId, varValue] of Object.entries(vars)) {
+        content = content.replaceAll(`{{${varId}}}`, varValue);
+    }
+    return content;
 }
 
 main().catch(err => {

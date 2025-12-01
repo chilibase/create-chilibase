@@ -20,16 +20,10 @@ import {XEnum} from "@chilibase/backend/x-enum.entity";
 import {XParam} from "@chilibase/backend/x-param.entity";
 import {PostSubscriber} from "./PostSubscriber.js";
 import {XUser} from "@chilibase/backend/x-user.entity";
-import {Brand} from "./model/brand.entity.js";
-import {Country} from "./model/country.entity.js";
-import {Car} from "./model/car.entity.js";
-import {Ride} from "./model/ride.entity.js";
-import {CarReservation} from "./model/car-reservation.entity.js";
-import {Client} from "./model/client.entity.js";
 import {ConnectionOptions, parse} from "pg-connection-string";
 
-const entities: EntityClassOrSchema[] = [XBrowseMeta, XColumnMeta, XFile, XUser, XEnumEnum, XEnum, XParam,
-  Brand, Country, Car, Ride, Client, CarReservation
+const entities: EntityClassOrSchema[] = [XBrowseMeta, XColumnMeta, XFile, XUser, XEnumEnum, XEnum, XParam
+  // >> add project specific entities here <<
 ];
 
 // since this method uses environment variables, must be called after the initialization of module ConfigModule

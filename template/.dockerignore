@@ -3,10 +3,7 @@
 # remark: during github actions build, repo is checked out and node_modules, dist, ... folder are not present,
 # so this setting is important if someone runs build on e.g. developer dir structure
 
-/node_modules
 /backend/node_modules
 /backend/dist
-/common/node_modules
-/common/dist
 /frontend/node_modules
 /frontend/dist
