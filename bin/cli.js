@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function main() {
-    console.log("Welcome to Chilibase project generator - localhost 4.");
+    console.log("Welcome to Chilibase project generator.");
 
     // Grab project name from CLI args
     const args = process.argv.slice(2);
@@ -40,8 +40,10 @@ async function main() {
     console.log(`   Chilibase project created in ${projectDir}`);
     console.log(`   Next steps:`);
     console.log(``);
-    console.log(`   create postgres database`);
-    console.log(`   create framework tables/db content using script ${projectName}/backend/src/sql_scripts/create_tables_x.sql`);
+    console.log(`   create postgres database (e.g. using script ${projectName}/backend/src/sql_scripts_create_db/1_create_db.sql)`);
+    console.log(`   create schema in database (e.g. using script ${projectName}/backend/src/sql_scripts_create_db/1_create_schema.sql)`);
+    console.log(`   create framework tables/db content using script ${projectName}/backend/src/sql_scripts/create_tables_x.sql   (table x_user is required)`);
+    console.log(`   insert data using script ${projectName}/backend/src/sql_scripts/data.sql`);
     console.log(`   configure backend in ${projectName}/backend/.env`);
     console.log(`   configure frontend in ${projectName}/frontend/.env`);
     console.log(``);

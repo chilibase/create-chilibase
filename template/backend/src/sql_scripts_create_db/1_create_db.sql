@@ -1,8 +1,7 @@
--- script to drop and create DB (can be run on another DB)
--- (if DB does not exists yet, comment "DROP DATABASE car_demo_db;")
+-- script to (drop) create DB (can be run on another existing DB)
 -- (database can be created also direct in DB tool (e.g. DBeaver))
 
-DROP DATABASE car_demo_db;
+--DROP DATABASE car_demo_db;
 
 -- (can be run on another DB):
 CREATE DATABASE "car_demo_db"

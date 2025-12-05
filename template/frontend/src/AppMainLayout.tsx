@@ -1,6 +1,7 @@
 import {XUtils} from "@chilibase/frontend/XUtils";
 import {Outlet} from "react-router";
 import {MenuItem, XMenubar} from "@chilibase/frontend/app-layout";
+import {XEnvVar, XViteAuth} from "@chilibase/frontend/XEnvVars";
 
 export const AppMainLayout = () => {
 
@@ -34,9 +35,9 @@ export const AppMainLayout = () => {
         {
             label:'Administration',
             items:[
-                {template: <MenuItem label='Users' to='/users'/>}
+                {template: <MenuItem label='Users' to='/users'/>},
                 //{label:'Browses', command: () => {openForm(<XBrowseMetaBrowse/>);}}
-                //{label:'Change password', command: () => {openForm(<XChangePasswordForm setXToken={props.setXToken}/>);}}
+                ...(XUtils.getEnvVarValue(XEnvVar.VITE_AUTH) === XViteAuth.LOCAL ? [{template: <MenuItem label='Change password' to='/change-password'/>}] : [])
             ]
         },
         {

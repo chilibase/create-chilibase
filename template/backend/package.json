@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "linkLib": "pnpm link @michalrakus/x-nest-server-lib",
     "buildAndPackLib": "pnpm --prefix ../../chilibase/backend run buildAndPack",
-    "installLib": "pnpm install ../../chilibase/backend/chilibase-backend-0.1.1.tgz",
+    "installLib": "pnpm install ../../chilibase/backend/chilibase-backend-0.1.2.tgz",
     "cs": "pnpm run copy-common && pnpm run start",
     "bl": "pnpm run buildAndPackLib && pnpm run installLib",
     "sl": "pnpm run bl && pnpm run cs",
@@ -32,7 +32,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@chilibase/backend": "0.1.1",
+    "@chilibase/backend": "0.1.2",
     "@nestjs/common": "^11.0.20",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.20",

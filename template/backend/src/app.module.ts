@@ -7,7 +7,6 @@ import {XBrowseMeta} from "@chilibase/backend/x-browse-meta.entity";
 import {XColumnMeta} from "@chilibase/backend/x-column-meta.entity";
 import {MulterModule} from "@nestjs/platform-express";
 import {EntityClassOrSchema} from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type.js";
-import {AuthModule} from "@chilibase/backend/auth.module";
 import {APP_GUARD} from "@nestjs/core";
 import {JwtAuthGuard} from "@chilibase/backend/jwt-auth.guard";
 import {XAuth, XEnvVar} from "@chilibase/backend/XEnvVars";
@@ -74,16 +73,14 @@ export class AppModule {
       exports: [TypeOrmModule], // according to doc, is needed to access DB from all modules, but works also without this export
       module: AppModule
     };
-    // add authentification modules if the authentification is not off
     if (XUtils.getEnvVarValue(XEnvVar.X_AUTH) !== XAuth.OFF) {
-      appModuleMetadata.imports.push(AuthModule);
+      //appModuleMetadata.imports.push(AuthModule); <- AuthModule is imported into XLibModule in lib
+      // APP_GUARD adds JwtAuthGuard (JwtStrategy) to all endpoints (in all controllers)
       appModuleMetadata.providers.push(
           {
             provide: APP_GUARD,
             useClass: JwtAuthGuard
-            //useClass: MsEntraIdAuthGuard // temporary for testing
           }
-          //MsEntraIdStrategy // temporary for testing
       );
     }
     return appModuleMetadata;

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@chilibase/frontend':
-        specifier: 0.1.1
-        version: 0.1.1(primeflex@3.3.1)(primeicons@7.0.0)(primereact@10.9.4(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(quill@2.0.3)(react-dom@18.3.1(react@18.3.1))(react-router@7.9.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        specifier: 0.1.2
+        version: 0.1.2(primeflex@3.3.1)(primeicons@7.0.0)(primereact@10.9.4(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(quill@2.0.3)(react-dom@18.3.1(react@18.3.1))(react-router@7.9.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       axios:
         specifier: ^1.8.4
         version: 1.13.2
@@ -195,8 +195,8 @@ packages:
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
 
-  '@chilibase/frontend@0.1.1':
-    resolution: {integrity: sha512-ijd/mwHk0ghZnJnP7UE6G5DP/i3bqKPnQqCVO7+Oakpv5VvsO9is3Z7pA5oVRR5YNMhZtadAiz2OmHHMHk0SLA==}
+  '@chilibase/frontend@0.1.2':
+    resolution: {integrity: sha512-rEEFbja2ZFT1mhPWHvMMVJmVSjpX4+d0suK6mSrpKsRrkEm67M2tTyjEyeOlwctZotEEfgbczMGbuQdfSsDP5A==}
     engines: {node: '>=20'}
     peerDependencies:
       primeflex: ^3.3.1
@@ -1528,7 +1528,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@chilibase/frontend@0.1.1(primeflex@3.3.1)(primeicons@7.0.0)(primereact@10.9.4(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(quill@2.0.3)(react-dom@18.3.1(react@18.3.1))(react-router@7.9.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+  '@chilibase/frontend@0.1.2(primeflex@3.3.1)(primeicons@7.0.0)(primereact@10.9.4(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(quill@2.0.3)(react-dom@18.3.1(react@18.3.1))(react-router@7.9.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@auth0/auth0-react': 2.9.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@azure/msal-browser': 4.26.2
