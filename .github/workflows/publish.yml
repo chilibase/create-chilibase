@@ -2,11 +2,8 @@
 name: Publish
 
 on:
-  # temporary turn off "push" in order to commit stuff (workflow_dispatch enables manually triggering)
-  #push
   workflow_dispatch
-  #release:
-  #  types: [published]
+
 jobs:
   publish:
     name: Publish
@@ -26,7 +23,11 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 8
-          run_install: true
+          run_install: false   # prevent recursive install (creating node_modules in template/frontend, template/backend)
+
+      # Install only the package you want to publish
+      - name: Install dependencies for project
+        run: pnpm install
 
       - name: Publish package on NPM
         run: pnpm publish --access public --no-git-checks
