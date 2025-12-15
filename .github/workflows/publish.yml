@@ -20,7 +20,7 @@ jobs:
       - name: Setup .npmrc file
         uses: actions/setup-node@v4
         with:
-          node-version: '24.x'
+          node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Setup pnpm
@@ -29,9 +29,13 @@ jobs:
           version: 10
           run_install: false   # prevent recursive install (creating node_modules in template/frontend, template/backend)
 
+      # Ensure npm 11.5.1 or later is installed
+      - name: Update npm
+        run: pnpm install -g npm@latest
+
       # Install only the package you want to publish
       - name: Install dependencies for project
         run: pnpm install
 
       - name: Publish package on NPM
-        run: npm publish --access public --no-git-checks
+        run: pnpm publish --access public --no-git-checks
