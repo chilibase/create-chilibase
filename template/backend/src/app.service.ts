@@ -1,5 +1,4 @@
 import {Injectable} from '@nestjs/common';
-import {UtilsCommon} from "./common/UtilsCommon.js";
 
 @Injectable()
 export class AppService {
@@ -8,6 +7,6 @@ export class AppService {
     }
 
     getHello(): string {
-        return '{{projectName}}-backend works! ' + UtilsCommon.test();
+        return '{{projectName}}-backend works!';
     }
 }

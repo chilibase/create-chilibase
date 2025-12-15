@@ -3,9 +3,9 @@
 DROP SCHEMA public;
 
 -- create schema
-CREATE SCHEMA car_demo;
+CREATE SCHEMA {{schemaName}};
 
-ALTER SCHEMA car_demo OWNER TO postgres;
+ALTER SCHEMA {{schemaName}} OWNER TO postgres;
 
 -- functions unaccent used by full-text search
-CREATE EXTENSION unaccent schema car_demo;
+CREATE EXTENSION unaccent schema {{schemaName}};

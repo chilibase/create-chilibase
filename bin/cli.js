@@ -9,42 +9,30 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function main() {
-    console.log("Welcome to Chilibase project generator.");
+    console.log(`   Welcome to Chilibase project generator.`);
+    console.log(``);
 
     // Grab project name from CLI args
     const args = process.argv.slice(2);
-    let projectName = args[0];
-
-    if (!projectName) {
-        // Ask interactively if no argument provided
-        const response = await prompts({
-            type: "text",
-            name: "name",
-            message: "Project name?",
-            initial: "my-chilibase-app"
-        });
-        projectName = response.name;
-    }
-
-    if (!projectName) {
-        console.error("Project name is required");
-        process.exit(1);
-    }
+    const projectName = await readParam(args, 0, "Project name", "my-chili-app");
+    const dbName = await readParam(args, 1, "DB name", "my_chili_db");
+    const schemaName = await readParam(args, 2, "Schema name", "my_chili_schema");
 
     const projectDir = path.resolve(process.cwd(), projectName);
     fs.mkdirSync(projectDir, { recursive: true });
 
     const templateDir = path.join(__dirname, "..", "template");
-    copyDir(templateDir, projectDir, {projectName: projectName});
+    copyDir(templateDir, projectDir, {projectName: projectName, dbName: dbName, schemaName: schemaName});
 
     console.log(`   Chilibase project created in ${projectDir}`);
+    console.log(``);
     console.log(`   Next steps:`);
     console.log(``);
     console.log(`   create postgres database (e.g. using script ${projectName}/backend/src/sql_scripts_create_db/1_create_db.sql)`);
     console.log(`   create schema in database (e.g. using script ${projectName}/backend/src/sql_scripts_create_db/1_create_schema.sql)`);
     console.log(`   create framework tables/db content using script ${projectName}/backend/src/sql_scripts/create_tables_x.sql   (table x_user is required)`);
     console.log(`   insert data using script ${projectName}/backend/src/sql_scripts/data.sql`);
-    console.log(`   configure backend in ${projectName}/backend/.env`);
+    console.log(`   configure backend in ${projectName}/backend/.env        (at least <password> in X_DATABASE_URL)`);
     console.log(`   configure frontend in ${projectName}/frontend/.env`);
     console.log(``);
     console.log(`   cd ${projectName}/backend`);
@@ -55,6 +43,34 @@ async function main() {
     console.log(`   cd ${projectName}/frontend`);
     console.log(`   pnpm install`);
     console.log(`   pnpm run dev`);
+    console.log(``);
+    console.log(``);
+    console.log(`   Run application on http://localhost:5173/   user: michaelturner, password: turner (if AUTH=LOCAL used)`);
+}
+
+async function readParam(args, position, paramName, initialValue) {
+    let paramValue;
+    if (args.length > position) {
+        paramValue = args[position];
+    }
+
+    if (!paramValue) {
+        // Ask interactively if no argument provided
+        const response = await prompts({
+            type: "text",
+            name: "name",
+            message: `${paramName}?`,
+            initial: `${initialValue}`
+        });
+        paramValue = response.name;
+    }
+
+    if (!paramValue) {
+        console.error(`${paramName} is required`);
+        process.exit(1);
+    }
+
+    return paramValue;
 }
 
 function copyDir(src, dest, variables = {}) {
