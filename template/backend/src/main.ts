@@ -16,8 +16,7 @@ async function bootstrap() {
 
   const protocol: string = XUtils.getEnvVarValue(XEnvVar.X_PROTOCOL);
   let options: NestApplicationOptions | undefined = undefined;
-  // pri volaniach na backend pouzivame ten isty ssl certifikat ako pri volani na frontend (pociatocne stiahnutie aplikacie)
-  // (spolocny certifikat pre frontend i backend mame koli jednoduchosti, musia vsak mat tu istu domenu (car-demo.michalrakus.sk) aby to fungovalo (certifikat sa viaze na domenu))
+  // for backend requests we use the same ssl certificate like for frontend request (first GET request)
   if (protocol === XProtocol.HTTPS) {
     const domain: string = XUtils.getEnvVarValue(XEnvVar.X_DOMAIN);
     const httpsOptions: HttpsOptions = {
@@ -28,12 +27,12 @@ async function bootstrap() {
   }
   const app = await NestFactory.create<NestExpressApplication>(AppModule.forRoot(configModule), options);
   // cross origin policy - for production applies (HTTPS on):
-  // frontend app is requested from "https://car-demo.michalrakus.sk" (default port for https 443 is used)
-  // ajax requests use url "https://car-demo.michalrakus.sk/backend/<service>" (go to nginx and then are forwarded to nodejs (docker service backend:8082), also default port 443 is used)
-  // -> no need to add header for cross origin, both calls have the same origin "https://car-demo.michalrakus.sk" (http/https, domain, port)
+  // frontend app is requested from "https://<X_DOMAIN>" (default port for https 443 is used)
+  // ajax requests use url "https://<X_DOMAIN>/backend/<service>" (go to nginx and then are forwarded to nodejs (docker service backend:8082), also default port 443 is used)
+  // -> no need to add header for cross origin, both calls have the same origin "https://<X_DOMAIN>" (http/https, domain, port)
 
   // for localhost:
-  // frontend app request goes to url http://localhost:5173/ ak sme ale na localhost-e, tak volania na backend nejdu cez nginx (ak nepustame aplikaciu cez docker), idu priamo na localhost:8081
+  // frontend app request goes to url http://localhost:5173/
   // ajax requests go to url http://localhost:8081/, so the url is different from the origin url (ports are different)
   // -> different url must be allowed by adding header ‘Access-Control-Allow-Origin’ into http response of the frontend app request,
   // otherwise this error occurs: CORS header ‘Access-Control-Allow-Origin’ missing

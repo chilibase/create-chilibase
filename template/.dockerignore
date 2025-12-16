@@ -1,5 +1,5 @@
 # files that are not sent to build
-# .dockerignore works only if it is placed in root folder of context of build (in our case the whole car-demo repo)
+# .dockerignore works only if it is placed in root folder of context of build (in our case the whole app repo)
 # remark: during github actions build, repo is checked out and node_modules, dist, ... folder are not present,
 # so this setting is important if someone runs build on e.g. developer dir structure
 
