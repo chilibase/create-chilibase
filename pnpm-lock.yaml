@@ -4,16 +4,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  create-chilibase: 'link:'
-
 importers:
 
   .:
     dependencies:
-      create-chilibase:
-        specifier: 'link:'
-        version: 'link:'
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
