@@ -3,8 +3,6 @@ import {AppController} from './app.controller.js';
 import {AppService} from './app.service.js';
 import {XLibModule} from '@chilibase/backend/x-lib.module';
 import {TypeOrmModule, TypeOrmModuleOptions} from "@nestjs/typeorm";
-import {XBrowseMeta} from "@chilibase/backend/x-browse-meta.entity";
-import {XColumnMeta} from "@chilibase/backend/x-column-meta.entity";
 import {MulterModule} from "@nestjs/platform-express";
 import {EntityClassOrSchema} from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type.js";
 import {APP_GUARD} from "@nestjs/core";
@@ -12,16 +10,12 @@ import {JwtAuthGuard} from "@chilibase/backend/jwt-auth.guard";
 import {XAuth, XEnvVar} from "@chilibase/backend/XEnvVars";
 import {XUtils} from "@chilibase/backend/XUtils";
 import {XAdvancedConsoleLogger} from "@chilibase/backend/XAdvancedConsoleLogger";
-import {XFile} from "@chilibase/backend/x-file.entity";
 import {XOptimisticLockingSubscriber} from "@chilibase/backend/XOptimisticLockingSubscriber";
-import {XEnumEnum} from "@chilibase/backend/x-enum-enum.entity";
-import {XEnum} from "@chilibase/backend/x-enum.entity";
-import {XParam} from "@chilibase/backend/x-param.entity";
+import {BrowseMeta, ColumnMeta, XFile, User, XEnumEnum, XEnum, XParam} from "@chilibase/backend/administration";
 import {PostSubscriber} from "./PostSubscriber.js";
-import {XUser} from "@chilibase/backend/x-user.entity";
 import {ConnectionOptions, parse} from "pg-connection-string";
 
-const entities: EntityClassOrSchema[] = [XBrowseMeta, XColumnMeta, XFile, XUser, XEnumEnum, XEnum, XParam
+const entities: EntityClassOrSchema[] = [BrowseMeta, ColumnMeta, XFile, User, XEnumEnum, XEnum, XParam
   // >> add project specific entities here <<
 ];
 

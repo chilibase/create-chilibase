@@ -1,9 +1,12 @@
-import {XUtils} from "@chilibase/frontend/XUtils";
+import {CBUtils} from "@chilibase/frontend/utils";
 import {Outlet} from "react-router";
-import {MenuItem, XMenubar} from "@chilibase/frontend/app-layout";
-import {XEnvVar, XViteAuth} from "@chilibase/frontend/XEnvVars";
+import {MenuItem, MenuBar} from "@chilibase/frontend/app-layout";
+import {CBEnvVar, ViteAuth} from "@chilibase/frontend/env-vars";
+import {useAuthSession} from "@chilibase/frontend/auth";
 
 export const AppMainLayout = () => {
+
+    const {session} = useAuthSession();
 
     // const navigate = useNavigate();
     //
@@ -28,28 +31,28 @@ export const AppMainLayout = () => {
         // {
         //     label:'Runtime edit',
         //     items:[
-        //         {label:'Brand - runtime edit', command: () => {openForm(<XEditBrowse entity="Brand"/>);}},
-        //         {label:'Car - runtime edit', command: () => {openForm(<XEditBrowse entity="Car"/>);}}
+        //         {label:'Brand - runtime edit', command: () => {openForm(<DynamicBrowse entity="Brand"/>);}},
+        //         {label:'Car - runtime edit', command: () => {openForm(<DynamicBrowse entity="Car"/>);}}
         //     ]
         // },
         {
             label:'Administration',
             items:[
                 {template: <MenuItem label='Users' to='/users'/>},
-                //{label:'Browses', command: () => {openForm(<XBrowseMetaBrowse/>);}}
-                ...(XUtils.getEnvVarValue(XEnvVar.VITE_AUTH) === XViteAuth.LOCAL ? [{template: <MenuItem label='Change password' to='/change-password'/>}] : [])
+                //{label:'Browses', command: () => {openForm(<BrowseMetaBrowse/>);}}
+                ...(CBUtils.getEnvVarValue(CBEnvVar.VITE_AUTH) === ViteAuth.LOCAL ? [{template: <MenuItem label='Change password' to='/change-password'/>}] : [])
             ]
         },
         {
             label:'Log off',
             icon:'pi pi-fw pi-power-off',
-            command: XUtils.getXToken()!.logout
+            command: session!.logout
         }
     ];
 
     return (
         <div>
-            <XMenubar model={items}/>
+            <MenuBar model={items}/>
             <div className="App-form">
                 <Outlet/>
             </div>

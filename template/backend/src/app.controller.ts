@@ -9,7 +9,7 @@ import {Public} from "@chilibase/backend/public";
 import {XLazyDataTableService} from "@chilibase/backend/services";
 import {SaveRowParam} from "@chilibase/backend/services";
 import {XLibService} from "@chilibase/backend/x-lib.service";
-import {FindParam, FindResult} from "@chilibase/backend/serverApi";
+import {FindParam, FindResult} from "@chilibase/backend/common";
 
 @Controller()
 export class AppController {

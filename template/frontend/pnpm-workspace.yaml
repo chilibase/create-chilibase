@@ -1,0 +1,6 @@
+allowBuilds:
+  '@chilibase/frontend': true
+  browser-tabs-lock: true
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@chilibase/frontend@0.5.0'

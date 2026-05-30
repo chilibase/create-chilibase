@@ -21,13 +21,13 @@ body {
 }
 
 .App {
-  /* text-align: center; - centruje polozky v AutoComplete, co nechceme */
+  /* text-align: center; - centruje polozky v Autocomplete, co nechceme */
   /* skopirovane z App-header - to prislo cez npx create-react-app <app-name> */
   background-color: #282c34;
   color: white;
 }
 
-/* formular (nachadza sa pod XMenu) - centruje sa horizontalne, menu je natiahnute na celu obrazovku */
+/* formular (nachadza sa pod MenuBar) - centruje sa horizontalne, menu je natiahnute na celu obrazovku */
 .App-form {
   /* skopirovane z App-header - to prislo cez npx create-react-app <app-name> */
   /*min-height: 100vh;*/
@@ -68,7 +68,7 @@ body {
                           tiez sposobi, ze komponent nie je roztiahnuty na celu vysku (netreba max-height: 2.5rem;) */
 }
 
-/* checkbox vo formulari (vytvoreny cez XCheckbox) - vertikalne centrovanie (cez flexbox)
+/* checkbox vo formulari (vytvoreny cez Checkbox) - vertikalne centrovanie (cez flexbox)
 TOTO ZMAZAT
 staci nam align-items: center; na .field.grid, toto je "duplicita"
 .field.grid > .p-checkbox {
@@ -123,7 +123,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   opacity: 0.6;
 }
 
-/* this css centers buttons in search dialog (XSearchButton, XSearchButtonDT) */
+/* this css centers buttons in search dialog (SearchField, TableSearchField) */
 /* zrealizujeme cez flex
 .x-lazy-datatable {
   text-align: center;
@@ -139,7 +139,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 }
 
 /* multiline content in lazy datatable - overrides nowrap of the element td
-   we want it the same way like in InputTextarea (and also like in Editor) */
+   we want it the same way like in TextareaField (and also like in Editor) */
 .x-multiline-content {
   white-space: pre-wrap;
 }
@@ -214,7 +214,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 }
 
 /* lazy datatable - body - not shrinked
-   (selector for .x-form-datatable with padding: 0.21rem targets lazy table opened from XSearchButtonDT, that's why we need this selector ) */
+   (selector for .x-form-datatable with padding: 0.21rem targets lazy table opened from TableSearchField, that's why we need this selector ) */
 .p-datatable.p-datatable-sm.x-lazy-datatable .p-datatable-tbody > tr > td {
   padding: 0.5rem;
 }
@@ -232,12 +232,12 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 
 /* filter-row - width 2 -> 1.25 - saving space, filter-menu-button is narrower */
 .p-column-filter-row .p-column-filter-menu-button {
-   width: 1.25rem;
+  width: 1.25rem;
 }
 
 /* filter-row - width 2.357 -> 1.25 - saving space, datepicker-button is narrower */
 .p-column-filter-row .p-calendar > .p-button.p-datepicker-trigger {
-   width: 1.25rem;
+  width: 1.25rem;
 }
 
 /* filter-row - padding 0.5 -> 0.25 - saving space, inputtext is narrower */
@@ -260,7 +260,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
     - min-content nastavil sirky stlpcov presne na sirku urcenu cez headerStyle na stlpci
     - auto este navyse trosku zvecsilo stlpce ak boli dlhe labely
     - problem - ak sme chceli scrolbar-y, tak nefungovalo zarovnanie stlpcov s header-ami
-    - riesenie - min-content sa teraz priamo zadava na komponente tabulky (XLazyDataTable.DataTable)
+    - riesenie - min-content sa teraz priamo zadava na komponente tabulky (LazyDataTable.DataTable)
  */
 /*
 .p-datatable table {
@@ -273,7 +273,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   width: 25rem;
 }
 
-/* medium button with icon (component XButtonIconMedium) */
+/* medium button with icon (component ButtonIconMedium) */
 .p-button.x-button-icon-medium {
   width: 2.157rem;
 }
@@ -283,12 +283,12 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   padding: 0.09rem;
 }
 
-/* narrow button with icon (component XButtonIconNarrow) */
+/* narrow button with icon (component ButtonIconNarrow) */
 .p-button.x-button-icon-narrow {
   width: 1.5rem;
 }
 
-/* small button with icon (component XButtonIconSmall) */
+/* small button with icon (component ButtonIconSmall) */
 .p-button.x-button-icon-small {
   width: auto;
   padding: 0.21rem;
@@ -298,35 +298,35 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   height: 0rem;
 }
 
-/* search button (XSearchButton and XSearchButtonDT) */
-.x-search-button-base {
+/* search field (SearchField and TableSearchField) */
+.x-search-field {
   display: flex;
 }
 
-/* width: 100%; - koli search button in datatable (XSearchButtonDT) - bez tohto flex prilis natahoval button (search button vyliezal z bunky, ak mal stlpec nastavenu custom sirku) */
-.x-search-button-base > .p-inputtext {
+/* width: 100%; - koli search button in datatable (TableSearchField) - bez tohto flex prilis natahoval button (search button vyliezal z bunky, ak mal stlpec nastavenu custom sirku) */
+.x-search-field > .p-inputtext {
   flex: 1 1 auto;
   width: 100%;
 }
 
-.x-search-button-base > .p-button {
+.x-search-field > .p-button {
   flex: 0 1 auto;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }
 
-/* auto complete (XAutoCompleteBase), plati pre vsetky autocomplete-y, aj ked sa to pridavalo len koli XAutoCompleteDT */
+/* auto complete (AutocompleteInput), plati pre vsetky autocomplete-y, aj ked sa to pridavalo len koli TableAutocompleteField */
 .x-auto-complete-base {
   display: flex;
   /*max-height: 2.5rem; aby nevznikali "vysoke" autocomplete-y, ak je susedna polozka (textarea) na viac riadkov - netreba, lebo mame align-items: center; na .field.grid */
 }
 
-/* width: 100%; - koli auto complete in datatable (XAutoCompleteDT) - bez tohto bol span.p-autocomplete prilis kratky pri velmi sirokych stlpcoch */
+/* width: 100%; - koli auto complete in datatable (TableAutocompleteField) - bez tohto bol span.p-autocomplete prilis kratky pri velmi sirokych stlpcoch */
 .x-auto-complete-base > .p-autocomplete {
   width: 100%;
 }
 
-/* width: 100%; - koli auto complete in datatable (XAutoCompleteDT) - bez tohto flex prilis natahoval button (auto complete vyliezal z bunky, ak mal stlpec nastavenu custom sirku) */
+/* width: 100%; - koli auto complete in datatable (TableAutocompleteField) - bez tohto flex prilis natahoval button (auto complete vyliezal z bunky, ak mal stlpec nastavenu custom sirku) */
 .x-auto-complete-base > .p-autocomplete > .p-autocomplete-input {
   flex: 1 1 auto;
   width: 100%;
@@ -336,7 +336,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   flex: 0 1 auto;
 }
 
-/* split button only dropdown (in component XAutoCompleteBase) */
+/* split button only dropdown (in component AutocompleteInput) */
 .x-splitbutton-only-dropdown > .p-splitbutton-defaultbutton {
   display: none;
 }
@@ -362,12 +362,12 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   margin-right: 0rem;
 }
 
-/* .x-dropdownbutton for simple button in XAutoCompleteBase (no multiple operations) */
+/* .x-dropdownbutton for simple button in AutocompleteInput (no multiple operations) */
 .x-auto-complete-base > .x-dropdownbutton {
   width: 1.5rem;
 }
 
-/* split button only dropdown (in component XAutoCompleteBase) - mobile version*/
+/* split button only dropdown (in component AutocompleteInput) - mobile version*/
 .x-splitbutton-only-dropdown-mobile > .p-splitbutton-defaultbutton {
   display: none;
 }
@@ -396,7 +396,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   width: fit-content;
 }
 
-/* uprava dialogu v ktorom sa zobrazuju Form/Browse, hlavne v XAutoComplete,
+/* uprava dialogu v ktorom sa zobrazuju Form/Browse, hlavne v AutocompleteField,
    pozor, vyska header/footer ma vplyv na scrollovanie v dialogu */
 .x-dialog-without-header > .p-dialog-header {
   height: 1rem; /* potrebujeme aspon uzky header aby sme vedeli dialog presuvat */
@@ -417,10 +417,10 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   font-size: var(--app-form-font-size); /* velkost labelov fieldov v dialogu */
 }
 
-/* root div pre XInputTextarea a XEditor, ak nastavime property labelOnTop=true */
+/* root div pre MultilineTextField a RichTextField, ak nastavime property labelOnTop=true */
 .x-inputtextarea-label-on-top, .x-editor-label-on-top {
   flex-direction: column;
-  padding-left: 0.5rem; /* ostatne fieldy v stlpci maju margin 0.5rem, tak zarovname aj tento XInputTextarea */
+  padding-left: 0.5rem; /* ostatne fieldy v stlpci maju margin 0.5rem, tak zarovname aj tento MultilineTextField */
 }
 
 .x-inputfilelist > .p-progressbar {
@@ -471,7 +471,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   display: flex;
   justify-content: center; /* pre projekt depaul som zmenil z space-evenly na center - nech su stlpce pokope */
   flex-wrap: wrap;
-  min-width: min-content; /* na mobile sme mali problem - ked jeho parent (XFormScrollable) vytvara (aj) horizontalny scrollbar,
+  min-width: min-content; /* na mobile sme mali problem - ked jeho parent (FormScrollable) vytvara (aj) horizontalny scrollbar,
                               tak tento element kopiruje sirku parenta (cize sirku mobilu) a potom zle zobrazuje scrollbar (neda sa nascrollovat obsah uplne vlavo),
                                toto nastavenie sposobi ze ak je child element sirsi, tak sirka sa vezme z sirokeho child elementu (a nie z uzkeho parent elementu)
                                a scrollbar funguje korektne */
@@ -600,7 +600,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   /* width: 100%; */
 }
 
-/* labels only dame do rafika (este by sme mohli dat do XInputTextareaBase readOnly) */
+/* labels only dame do rafika (este by sme mohli dat do MultilineTextInput readOnly) */
 .x-fsb-labels-only {
   padding: 0.5rem;
   border: 1px solid #ced4da;
