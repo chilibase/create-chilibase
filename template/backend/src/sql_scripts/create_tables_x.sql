@@ -1,6 +1,6 @@
 -- copied (temporary) from backend framework
 
--- DROP TABLE x_file;
+-- DROP TABLE x_file_meta;
 -- DROP TABLE x_column_meta;
 -- DROP TABLE x_browse_meta;
 -- DROP TABLE x_user;
@@ -48,7 +48,7 @@ CREATE INDEX ON x_column_meta (x_browse_meta_id);
 -- bytea (bytearray) has limit 1 GB
 -- size is informative field
 -- file can be saved in file system (path + name is saved in field path_name, data is null) or can be saved direct in field data (path_name is null)
-CREATE TABLE x_file (
+CREATE TABLE x_file_meta (
     id serial PRIMARY KEY,
     name varchar(256) NOT NULL,
     size INT NOT NULL,
@@ -58,8 +58,5 @@ CREATE TABLE x_file (
     modif_x_user_id int
 );
 
-ALTER TABLE x_file ADD FOREIGN KEY (modif_x_user_id) REFERENCES x_user (id);
-CREATE INDEX ON x_file (modif_x_user_id);
-
--- funkcia na odstranenie diakritiky pouzivana vo full-text search (treba ju volat: unaccent(<VARCHAR>))
---CREATE EXTENSION unaccent schema <schema>;
+ALTER TABLE x_file_meta ADD FOREIGN KEY (modif_x_user_id) REFERENCES x_user (id);
+CREATE INDEX ON x_file_meta (modif_x_user_id);

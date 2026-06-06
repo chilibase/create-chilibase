@@ -1,24 +1,25 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
-import {XExceptionFilter} from "@chilibase/backend/x-exception.filter";
-import {XUtils} from "@chilibase/backend/XUtils";
-import {XEnvVar, XProtocol} from "@chilibase/backend/XEnvVars";
+import {ExceptionFilter} from "@chilibase/backend/utils";
+import {XUtils} from "@chilibase/backend/utils";
+import {EnvVar, Protocol} from "@chilibase/backend/env-vars";
 import {readFileSync} from "fs";
 import {HttpsOptions} from "@nestjs/common/interfaces/external/https-options.interface.js";
 import {DynamicModule, NestApplicationOptions} from "@nestjs/common";
 import {ConfigModule} from "@nestjs/config";
 import {NestExpressApplication} from "@nestjs/platform-express";
+import {setLocale} from "./Locale.js";
 
 async function bootstrap() {
   // creating configModule must be as first because module loads variables from file .env
   // isGlobal:true enables environment variables in every module
   const configModule: DynamicModule = await ConfigModule.forRoot({isGlobal: true});
 
-  const protocol: string = XUtils.getEnvVarValue(XEnvVar.X_PROTOCOL);
+  const protocol: string = XUtils.getEnvVarValue(EnvVar.X_PROTOCOL);
   let options: NestApplicationOptions | undefined = undefined;
   // for backend requests we use the same ssl certificate like for frontend request (first GET request)
-  if (protocol === XProtocol.HTTPS) {
-    const domain: string = XUtils.getEnvVarValue(XEnvVar.X_DOMAIN);
+  if (protocol === Protocol.HTTPS) {
+    const domain: string = XUtils.getEnvVarValue(EnvVar.X_DOMAIN);
     const httpsOptions: HttpsOptions = {
       key: readFileSync(`/etc/node/ssl/live/${domain}/privkey.pem`),
       cert: readFileSync(`/etc/node/ssl/live/${domain}/fullchain.pem`)
@@ -36,14 +37,16 @@ async function bootstrap() {
   // ajax requests go to url http://localhost:8081/, so the url is different from the origin url (ports are different)
   // -> different url must be allowed by adding header ‘Access-Control-Allow-Origin’ into http response of the frontend app request,
   // otherwise this error occurs: CORS header ‘Access-Control-Allow-Origin’ missing
-  if (protocol === XProtocol.HTTP) {
+  if (protocol === Protocol.HTTP) {
     app.enableCors(); // adds header ‘Access-Control-Allow-Origin’ with value * (disabling CORS security)
     // more secure option:
     //app.enableCors({origin: "http://localhost:8081/"});
   }
-  app.useGlobalFilters(new XExceptionFilter());
+  app.useGlobalFilters(new ExceptionFilter());
 
-  const port: string = XUtils.getEnvVarValue(XEnvVar.X_PORT);
+  setLocale();
+
+  const port: string = XUtils.getEnvVarValue(EnvVar.X_PORT);
   await app.listen(port);
 }
 bootstrap();

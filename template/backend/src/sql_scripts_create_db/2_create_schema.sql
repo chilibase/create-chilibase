@@ -7,5 +7,5 @@ CREATE SCHEMA {{schemaName}};
 
 ALTER SCHEMA {{schemaName}} OWNER TO postgres;
 
--- functions unaccent used by full-text search
+-- function unaccent used by full-text search (using: <schema>.unaccent(<VARCHAR>))
 CREATE EXTENSION unaccent schema {{schemaName}};

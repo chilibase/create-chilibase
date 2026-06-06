@@ -5,18 +5,18 @@ import {
     Post
 } from '@nestjs/common';
 import {AppService} from './app.service.js';
-import {Public} from "@chilibase/backend/public";
-import {XLazyDataTableService} from "@chilibase/backend/services";
-import {SaveRowParam} from "@chilibase/backend/services";
-import {XLibService} from "@chilibase/backend/x-lib.service";
+import {Public} from "@chilibase/backend/auth";
+import {LazyDataTableService} from "@chilibase/backend/persistence";
+import {SaveRowParam} from "@chilibase/backend/persistence";
+import {PersistenceService} from "@chilibase/backend/persistence";
 import {FindParam, FindResult} from "@chilibase/backend/common";
 
 @Controller()
 export class AppController {
     constructor(private readonly appService: AppService,
-                private readonly xLazyDataTableService: XLazyDataTableService,
-                private readonly xLibService: XLibService
-                ) {
+                private readonly lazyDataTableService: LazyDataTableService,
+                private readonly persistenceService: PersistenceService
+    ) {
     }
 
     @Public()
@@ -26,9 +26,9 @@ export class AppController {
     }
 
     //@Public()
-    @Post('lazyDataTableFindRowsTest')
+    @Post('lazy-data-table-find-rows-test')
     async lazyDataTableFindRowsTest(@Body() body: FindParam): Promise<FindResult> {
-        const findResult: FindResult = await this.xLazyDataTableService.findRows(body);
+        const findResult: FindResult = await this.lazyDataTableService.findRows(body);
         // test - types of attributes, those TypeORM uses by reading object from DB
         for (const row of findResult.rowList) {
             //if (body.entity === "<entity name>") {
@@ -41,8 +41,8 @@ export class AppController {
     }
 
     //@Public()
-    @Post('saveRowTest')
+    @Post('save-row-test')
     saveRow(@Body() body: SaveRowParam): Promise<any> {
-        return this.xLibService.saveRow(body);
+        return this.persistenceService.saveRow(body);
     }
 }

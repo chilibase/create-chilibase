@@ -1,31 +1,32 @@
 import {DynamicModule, Module} from '@nestjs/common';
 import {AppController} from './app.controller.js';
 import {AppService} from './app.service.js';
-import {XLibModule} from '@chilibase/backend/x-lib.module';
+import {ChilibaseModule} from '@chilibase/backend/main-module';
 import {TypeOrmModule, TypeOrmModuleOptions} from "@nestjs/typeorm";
 import {MulterModule} from "@nestjs/platform-express";
 import {EntityClassOrSchema} from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type.js";
 import {APP_GUARD} from "@nestjs/core";
-import {JwtAuthGuard} from "@chilibase/backend/jwt-auth.guard";
-import {XAuth, XEnvVar} from "@chilibase/backend/XEnvVars";
-import {XUtils} from "@chilibase/backend/XUtils";
-import {XAdvancedConsoleLogger} from "@chilibase/backend/XAdvancedConsoleLogger";
-import {XOptimisticLockingSubscriber} from "@chilibase/backend/XOptimisticLockingSubscriber";
-import {BrowseMeta, ColumnMeta, XFile, User, XEnumEnum, XEnum, XParam} from "@chilibase/backend/administration";
+import {JwtAuthGuard} from "@chilibase/backend/auth";
+import {Auth, EnvVar} from "@chilibase/backend/env-vars";
+import {XUtils} from "@chilibase/backend/utils";
+import {AdvancedConsoleLogger} from "@chilibase/backend/persistence";
+import {OptimisticLockingSubscriber} from "@chilibase/backend/persistence";
+import {BrowseMeta, ColumnMeta, User, EnumType, EnumValue, Parameter} from "@chilibase/backend/administration";
+import {FileMeta} from "@chilibase/backend/files";
 import {PostSubscriber} from "./PostSubscriber.js";
 import {ConnectionOptions, parse} from "pg-connection-string";
 
-const entities: EntityClassOrSchema[] = [BrowseMeta, ColumnMeta, XFile, User, XEnumEnum, XEnum, XParam
+const entities: EntityClassOrSchema[] = [BrowseMeta, ColumnMeta, FileMeta, User, EnumType, EnumValue, Parameter
   // >> add project specific entities here <<
 ];
 
 // since this method uses environment variables, must be called after the initialization of module ConfigModule
 function createTypeOrmModuleOptions(entities: EntityClassOrSchema[]): TypeOrmModuleOptions {
 
-  const dbConfig: ConnectionOptions = parse(XUtils.getEnvVarValue(XEnvVar.X_DATABASE_URL));
+  const dbConfig: ConnectionOptions = parse(XUtils.getEnvVarValue(EnvVar.X_DATABASE_URL));
   const schema: string | undefined = dbConfig['schema'] as string;
   if (!schema) {
-    throw `schema is missing in value of env var X_DATABASE_URL: ${XUtils.getEnvVarValue(XEnvVar.X_DATABASE_URL)}`;
+    throw `schema is missing in value of env var X_DATABASE_URL: ${XUtils.getEnvVarValue(EnvVar.X_DATABASE_URL)}`;
   }
 
   const typeOrmModuleOptions: TypeOrmModuleOptions = {
@@ -37,11 +38,11 @@ function createTypeOrmModuleOptions(entities: EntityClassOrSchema[]): TypeOrmMod
     database: dbConfig.database,
     schema: schema,
     entities: entities,
-    subscribers: [XOptimisticLockingSubscriber, PostSubscriber],
+    subscribers: [OptimisticLockingSubscriber, PostSubscriber],
     synchronize: false,
     // logging: true was replaced with custom logger - the param of type Buffer is logged smart
     //logging: true,
-    logger: new XAdvancedConsoleLogger(XUtils.getEnvVarValueBoolean(XEnvVar.X_LOG_SQL))
+    logger: new AdvancedConsoleLogger(XUtils.getEnvVarValueBoolean(EnvVar.X_LOG_SQL))
   };
   XUtils.setSchema(schema);
   return typeOrmModuleOptions;
@@ -55,9 +56,9 @@ export class AppModule {
     const appModuleMetadata: DynamicModule = {
       imports: [
         configModule,
-        TypeOrmModule.forRoot(createTypeOrmModuleOptions(entities)), // can be moved to XLibModule?
+        TypeOrmModule.forRoot(createTypeOrmModuleOptions(entities)), // can be moved to ChilibaseModule?
         TypeOrmModule.forFeature(entities), // is needed to enable inject TypeORM entity Repository
-        XLibModule.forRoot(),
+        ChilibaseModule.forRoot(),
         MulterModule.register(/*{dest: 'uploads/'}*/) // global settings for processing files, for now we set this in the controller's methods
       ],
       controllers: [AppController],
@@ -67,8 +68,8 @@ export class AppModule {
       exports: [TypeOrmModule], // according to doc, is needed to access DB from all modules, but works also without this export
       module: AppModule
     };
-    if (XUtils.getEnvVarValue(XEnvVar.X_AUTH) !== XAuth.OFF) {
-      //appModuleMetadata.imports.push(AuthModule); <- AuthModule is imported into XLibModule in lib
+    if (XUtils.getEnvVarValue(EnvVar.X_AUTH) !== Auth.OFF) {
+      //appModuleMetadata.imports.push(AuthModule); <- AuthModule is imported into ChilibaseModule in lib
       // APP_GUARD adds JwtAuthGuard (JwtStrategy) to all endpoints (in all controllers)
       appModuleMetadata.providers.push(
           {

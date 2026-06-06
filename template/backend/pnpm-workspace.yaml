@@ -3,4 +3,4 @@ allowBuilds:
   '@nestjs/core': true
   bcrypt: true
 minimumReleaseAgeExclude:
-  - '@chilibase/backend@0.5.0'
+  - '@chilibase/backend@0.6.0'

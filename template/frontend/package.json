@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "buildAndPackLib": "pnpm --prefix ../../chilibase/frontend run buildAndPack",
-    "installLib": "pnpm install ../../chilibase/frontend/chilibase-frontend-0.5.0.tgz",
+    "installLib": "pnpm install ../../chilibase/frontend/chilibase-frontend-0.6.0.tgz",
     "bl": "pnpm run buildAndPackLib && pnpm run installLib",
     "sl": "pnpm run bl && pnpm run dev",
     "preinstall": "npx only-allow pnpm"
@@ -20,7 +20,7 @@
   },
   "packageManager": "pnpm@11.4.0",
   "dependencies": {
-    "@chilibase/frontend": "0.5.0",
+    "@chilibase/frontend": "0.6.0",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primereact": "10.9.4",

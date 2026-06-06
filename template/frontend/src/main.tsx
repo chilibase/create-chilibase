@@ -13,13 +13,13 @@ import './index.css';
 import './App.css';
 
 import ReactDOM from "react-dom/client";
-import {CBUtils} from "@chilibase/frontend/utils";
+import {XUtils} from "@chilibase/frontend/utils";
 import {setLocale} from "./Locale";
 import {Utils} from "./Utils.tsx";
 import {AppRouterProvider} from "./AppRouterProvider.tsx";
 import {App} from "@chilibase/frontend/auth";
 
-CBUtils.initLib(Utils.getEnvVarValue);
+XUtils.initLib(Utils.getEnvVarValue);
 
 setLocale();
 
