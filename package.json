@@ -1,7 +1,13 @@
 {
   "name": "create-chilibase",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Project generator for Chilibase framework",
+  "author": "Michal Rakus <michalrakus@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chilibase/create-chilibase.git"
+  },
   "bin": {
     "create-chilibase": "./bin/cli.js"
   },
