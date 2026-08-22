@@ -33,7 +33,7 @@
   },
   "packageManager": "pnpm@11.4.0",
   "dependencies": {
-    "@chilibase/backend": "0.6.0",
+    "@chilibase/backend": "0.6.2",
     "@nestjs/common": "^11.0.20",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.20",
