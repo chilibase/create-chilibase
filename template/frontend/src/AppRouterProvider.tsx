@@ -1,7 +1,6 @@
 import {createBrowserRouter, RouterProvider} from "react-router";
 import {AppMainLayout} from "./AppMainLayout.tsx";
-import {UserBrowse} from "@chilibase/frontend/administration";
-import {ChangePasswordForm} from "@chilibase/frontend/administration";
+import {ChangePasswordForm, ParameterBrowse, UserBrowse} from "@chilibase/frontend/administration";
 import {XUtils} from "@chilibase/frontend/utils";
 import {XEnvVar, ViteAuth} from "@chilibase/frontend/env-vars";
 
@@ -18,6 +17,7 @@ export const AppRouterProvider = () => {
                 //{path: "/clients", Component: ClientBrowse},
                 //{path: "/car-reservations", Component: CarReservationBrowse},
                 {path: "/users", Component: UserBrowse},
+                {path: "/parameters", Component: ParameterBrowse},
                 ...(XUtils.getEnvVarValue(XEnvVar.VITE_AUTH) === ViteAuth.LOCAL ? [{path: "/change-password", Component: ChangePasswordForm}] : [])
             ]
         }

@@ -1,7 +1,11 @@
 allowBuilds:
   '@chilibase/backend': true
   '@nestjs/core': true
+  '@parcel/watcher': true
   bcrypt: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@chilibase/backend@0.7.0'
 overrides:
   encoding-sniffer: 1.0.2
   unzipper: 0.12.5

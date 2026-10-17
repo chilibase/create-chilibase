@@ -1,5 +1,5 @@
 // for simplicity, instead of json file x-sk.json
-import {LocaleOptions} from "@chilibase/backend/locale";
+import type {LocaleOptions} from "@chilibase/backend/locale";
 
 export const localeSk: {"sk": LocaleOptions} =
 {

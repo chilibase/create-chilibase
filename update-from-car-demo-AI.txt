@@ -1,0 +1,13 @@
+Instructions how to upgrade project create-chilibase - guide for AI
+
+When changes are made in car-demo (e.g. new release of chilibase), then we need to take some of the changes and apply them into create-chilibase.
+Project create-chilibase has template/backend and template/frontend, the content in this directories must be updated according to content in car-demo.
+That means all files in these template directories should be copy of particular files in car-demo, but there are some exceptions:
+ - In package.json files change this after copy:
+    - there is placeholder: "name": "{{projectName}}-backend", "name": "{{projectName}}-frontend"
+    - let author empty: "author": ""
+ - in frontend/src - AppMainLayout.tsx and AppRouterProvider.tsx - comment out the specific items for car-demo entities (e.g. Brand, Car, Client, CarReservation), remove also particular imports
+ - in backend/src/app.module.ts - comment out specific items for car-demo entities (e.g. Brand, Car, Client, CarReservation), remove also particular imports
+ - common/UtilsCommon.ts should stay empty as it is now (in both frontend/backend)
+ - .env files should stay as they are (create-chilibase has different settings unlike car-demo, .env files contain placeholders)
+ - generally, if there is some placeholder ({{projectName}}, {{dbName}}, {{schemaName}}), leave the placeholder in the file

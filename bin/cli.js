@@ -31,6 +31,7 @@ async function main() {
     console.log(`   create postgres database (e.g. using script ${projectName}/backend/src/sql_scripts_create_db/1_create_db.sql)`);
     console.log(`   create schema in database (e.g. using script ${projectName}/backend/src/sql_scripts_create_db/1_create_schema.sql)`);
     console.log(`   create framework tables/db content using script ${projectName}/backend/src/sql_scripts/create_tables_x.sql   (table x_user is required)`);
+    console.log(`   create framework tables/db content using script ${projectName}/backend/src/sql_scripts/create_tables_x_enums.sql`);
     console.log(`   insert data using script ${projectName}/backend/src/sql_scripts/data.sql`);
     console.log(`   configure backend in ${projectName}/backend/.env        (at least <password> in X_DATABASE_URL)`);
     console.log(`   configure frontend in ${projectName}/frontend/.env`);

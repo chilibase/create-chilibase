@@ -40,7 +40,8 @@ export const AppMainLayout = () => {
             items:[
                 {template: <MenuItem label='Users' to='/users'/>},
                 //{label:'Browses', command: () => {openForm(<BrowseMetaBrowse/>);}}
-                ...(XUtils.getEnvVarValue(XEnvVar.VITE_AUTH) === ViteAuth.LOCAL ? [{template: <MenuItem label='Change password' to='/change-password'/>}] : [])
+                ...(XUtils.getEnvVarValue(XEnvVar.VITE_AUTH) === ViteAuth.LOCAL ? [{template: <MenuItem label='Change password' to='/change-password'/>}] : []),
+                {template: <MenuItem label='Parameters' to='/parameters'/>}
             ]
         },
         {

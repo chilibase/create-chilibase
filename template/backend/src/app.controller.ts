@@ -6,17 +6,15 @@ import {
 } from '@nestjs/common';
 import {AppService} from './app.service.js';
 import {Public} from "@chilibase/backend/auth";
-import {LazyDataTableService} from "@chilibase/backend/persistence";
-import {SaveRowParam} from "@chilibase/backend/persistence";
-import {PersistenceService} from "@chilibase/backend/persistence";
-import {FindParam, FindResult} from "@chilibase/backend/common";
+import {LazyDataTableService, PersistenceService, type SaveRowParam} from "@chilibase/backend/persistence";
+import type {FindParam, FindResult} from "@chilibase/backend/common";
 
 @Controller()
 export class AppController {
     constructor(private readonly appService: AppService,
                 private readonly lazyDataTableService: LazyDataTableService,
                 private readonly persistenceService: PersistenceService
-    ) {
+                ) {
     }
 
     @Public()

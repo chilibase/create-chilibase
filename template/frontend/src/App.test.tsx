@@ -4,6 +4,6 @@
 // test('renders learn react link', () => {
 //   const { getByText } = render(<AppLocal />);
 //   const linkElement = getByText(/learn react/i);
-//   // po upgrade-e som musel zakomentovat
+//   // after the upgrade I had to comment it out
 //   //expect(linkElement).toBeInTheDocument();
 // });

@@ -2,6 +2,8 @@
   "sk": {
     "filter": "Filtrovať",
     "resetTable": "Zrušiť filter",
+    "columnToggle": "Stĺpce",
+    "resetColumns": "Obnoviť pôvodné stĺpce",
     "addRow": "Pridať",
     "editRow": "Upraviť",
     "removeRow": "Vymazať",

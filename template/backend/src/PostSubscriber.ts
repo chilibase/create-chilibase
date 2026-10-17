@@ -12,7 +12,7 @@ export class PostSubscriber implements EntitySubscriberInterface {
     /**
      * Called after query execution.
      */
-    afterQuery(event: AfterQueryEvent<any>) {
+    afterQuery(event: AfterQueryEvent) {
         //console.log(`AFTER QUERY: `, event.query);
         if (XUtils.getEnvVarValueBoolean(EnvVar.X_LOG_SQL)) {
             // if log SQL is on then log also the time

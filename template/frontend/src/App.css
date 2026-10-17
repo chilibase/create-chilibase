@@ -4,92 +4,92 @@
 }
 
 html {
-  overflow-y: scroll; /* vertikalny scrollbar vzdy zobrazeny (aj ked neaktivny) - ked nemame scrollbar, tak panely v dropdown-och su posunute kusok dolava */
+  overflow-y: scroll; /* vertical scrollbar always shown (even when inactive) - when we have no scrollbar, the panels in dropdowns are shifted a bit to the left */
 }
 
-/* fit-content natahuje menu v mobile na celu dlzku tabulky (ak ide tabulka "za" pravy okraj mobilu),
-   min-width: 100% zase v desktope centruje obsah (fit-content posuva obsah co najviac dolava a cez min-width: 100% to treba kompenzovat,
-   riesenie pokus/omyl, lepsie sme narychlo nenasli */
+/* fit-content stretches the menu on mobile to the full length of the table (if the table goes past the right edge of the mobile),
+   min-width: 100% on the other hand centers the content on desktop (fit-content pushes the content as far left as possible and min-width: 100% is needed to compensate for that,
+   trial-and-error solution, we did not quickly find a better one */
 body {
   width: fit-content;
   min-width: 100%;
-  margin: 0; /* prebijeme povodny margin-bottom 3.57rem (niekedy rusi vertikalny scrollbar) */
-  overflow-x: hidden; /* ak mame tabulku sirsiu ako je sirka stranky (caste na mobile), tak sa zapina horizontalny scrollbar na tabulke
-  - ten ale (v Chrome, v Mozille nie) sposobuje ze napravo od tabulky vznika prazdny priestor (t.j. je mozne sa odscrollovat doprava kde nic nevidno),
-  je mozne ze je to bug v Chrome, overflow-x: hidden sposobuje, ze sa neda scrollovat doprava na prazdny priestor,
-  problem moze byt ak budeme mat nejaky element/control sirsi ako je sirka mobilu - asi ho usekne; - nie je to problem, body bude mat vtedy velku sirku (a mobil zobrazi scrollbar) */
+  margin: 0; /* override the original margin-bottom 3.57rem (it sometimes interferes with the vertical scrollbar) */
+  overflow-x: hidden; /* if we have a table wider than the page (common on mobile), a horizontal scrollbar is turned on for the table
+  - but that (in Chrome, not in Firefox) causes empty space to appear to the right of the table (i.e. it is possible to scroll right where nothing is visible),
+  it is possible that this is a Chrome bug, overflow-x: hidden makes it impossible to scroll right into the empty space,
+  a problem can arise if we have some element/control wider than the mobile width - it will probably clip it; - that is not a problem, body will then have a large width (and the mobile will show a scrollbar) */
 }
 
 .App {
-  /* text-align: center; - centruje polozky v Autocomplete, co nechceme */
-  /* skopirovane z App-header - to prislo cez npx create-react-app <app-name> */
+  /* text-align: center; - centers items in Autocomplete, which we do not want */
+  /* copied from App-header - it came from npx create-react-app <app-name> */
   background-color: #282c34;
   color: white;
 }
 
-/* formular (nachadza sa pod MenuBar) - centruje sa horizontalne, menu je natiahnute na celu obrazovku */
+/* form (it sits under the MenuBar) - centered horizontally, the menu is stretched across the whole screen */
 .App-form {
-  /* skopirovane z App-header - to prislo cez npx create-react-app <app-name> */
+  /* copied from App-header - it came from npx create-react-app <app-name> */
   /*min-height: 100vh;*/
   /*display: flex;
-  flex-direction: column; - netreba nam flex, ak necentrujeme */
-  /*align-items: center; - stlaca dvojicky label + input */
-  /*justify-content: center; chceme mat formular hned pod menu */
+  flex-direction: column; - we do not need flex if we are not centering */
+  /*align-items: center; - squeezes the label + input pairs */
+  /*justify-content: center; we want the form right under the menu */
   /*font-size: calc(10px + 2vmin);*/
-  font-size: var(--app-form-font-size); /* velkost labelov fieldov k klasickom ciernom formulari (povodne boli velke label-y) */
-  min-height: calc(100vh - 10rem); /* ak neni ziaden obsah zobrazeny, tak panel menu mal strasne maly priestor, cisto 100vh (alebo napr. 500rem) zas zobrazi vertikalny scrollbar */
+  font-size: var(--app-form-font-size); /* size of field labels on the classic dark form (the labels were originally large) */
+  min-height: calc(100vh - 10rem); /* if no content is shown, the menu panel had far too little space, a plain 100vh (or e.g. 500rem) on the other hand shows a vertical scrollbar */
 }
 
 .source-code-link {
   color: deepskyblue;
 }
 
-/* specificke pre app-ku skch-finance */
+/* specific to the skch-finance app */
 .p-menubar-root-list {
   flex-wrap: nowrap;
 }
 
 .p-menubar-end {
-  margin-left: 0px; /* zrusime odsunutie doprava aby sme dropdown projekty dostali dolava (auto -> 0px) */
+  margin-left: 0px; /* cancel the shift to the right so we get the projects dropdown to the left (auto -> 0px) */
   width: 100%;
 }
 
-/* TODO - do lib-ky presunut */
+/* TODO - move into the lib */
 
-/* bolo -0.5 (v primereact), pridavalo to jemny horizontalny scrollbar v mobile (polozky boli o nieco sirsie ako sirka mobilu)
-  pozor! opatrne pridat do skch, zmena meni sem tam aj layout vo formularoch */
+/* it was -0.5 (in primereact), that added a slight horizontal scrollbar on mobile (items were a bit wider than the mobile width)
+  careful! add to skch with care, the change sometimes also changes the layout in forms */
 .field.grid, .formgrid.grid {
   margin-right: 0rem;
   margin-left: 0rem;
 }
 
 .field.grid:not(.x-inputtextarea-label-on-top) {
-  align-items: center; /* vertikalne vycentruje, ak je susedna polozka (textarea) na viac riadkov, tyka sa komponentov autocomplete, date, button
-                          tiez sposobi, ze komponent nie je roztiahnuty na celu vysku (netreba max-height: 2.5rem;) */
+  align-items: center; /* vertically centers, if a neighboring item (textarea) spans several lines, applies to autocomplete, date, button components
+                          it also causes the component not to be stretched to the full height (max-height: 2.5rem; is not needed) */
 }
 
-/* checkbox vo formulari (vytvoreny cez Checkbox) - vertikalne centrovanie (cez flexbox)
-TOTO ZMAZAT
-staci nam align-items: center; na .field.grid, toto je "duplicita"
+/* checkbox in the form (created via Checkbox) - vertical centering (via flexbox)
+DELETE THIS
+align-items: center; on .field.grid is enough for us, this is a "duplicate"
 .field.grid > .p-checkbox {
   align-self: center;
 }
-*** KONIEC ZMENY ***
+*** END OF CHANGE ***
 */
 
-/* oprava chybicky (primereact ~9.2.0) - header tabulky prekryval panel menu (obidva elementy mali z-index: 1) */
-/* primereact 10.9.2 - to iste, zvysil som na 3 */
+/* bug fix (primereact ~9.2.0) - the table header covered the menu panel (both elements had z-index: 1) */
+/* primereact 10.9.2 - the same thing, I raised it to 3 */
 .p-menubar .p-submenu-list {
   z-index: 3;
 }
 
-/* polozka v menu Hromadna evid. isla na 2 riadky a koli tomu nesedela vyska header/footer pri browse formularoch
-  zvysne polozky (vo vnutri menu) chceme na viac riadkov, preto takto komplikovane */
+/* the menu item Hromadna evid. went onto 2 lines and because of that the header/footer height did not match on browse forms
+  we want the remaining items (inside the menu) on several lines, that is why it is this complicated */
 .p-menubar-root-list > .p-menuitem > .p-menuitem-content > .p-menuitem-link > .p-menuitem-text {
   white-space: nowrap;
 }
 
-/* zvecsenie prazdnej (null) polozky v dropdown-och */
+/* enlarge the empty (null) item in dropdowns */
 .p-dropdown-label {
   min-height: 2.14rem;
 }
@@ -98,12 +98,12 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   min-height: 2.36rem;
 }
 
-/* trosku zuzeny button v dropdown-e - povodne bol 2.357rem */
+/* slightly narrowed button in the dropdown - originally it was 2.357rem */
 .p-dropdown .p-dropdown-trigger {
   width: 2rem;
 }
 
-/* zuzene datumy, vo formulari boli zbytocne dlhe; max-width pouzivame koli filtru - ked bol width, input utlacal date picker button */
+/* narrowed dates, in the form they were unnecessarily long; we use max-width because of the filter - when it was width, the input pushed the date picker button aside */
 .p-calendar .x-input-date {
   max-width: 6rem;
 }
@@ -118,21 +118,21 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   flex-wrap: wrap;
 }
 
-/* zasedime readonly inputy (nepouzivame disabled, lebo disabled inputy sa nedaju selectovat/kopirovat */
+/* gray out readonly inputs (we do not use disabled, because disabled inputs cannot be selected/copied) */
 .p-component[readonly] {
   opacity: 0.6;
 }
 
 /* this css centers buttons in search dialog (SearchField, TableSearchField) */
-/* zrealizujeme cez flex
+/* we implement it via flex
 .x-lazy-datatable {
   text-align: center;
 }
 */
 
 /* no line break in table headers (every row has only one line) and in table cells
-   kedze mame resizable columns (pridavaju overflow: hidden), resizovanim si vie uzer pozriet aj useknuty obsah bunky - moze to vsak byt problem na mobile */
-.p-datatable.x-lazy-datatable tr > th, .p-datatable.x-form-datatable tr > th,
+   because we have resizable columns (they add overflow: hidden), by resizing the user can also look at clipped cell content - however this can be a problem on mobile */
+.p-datatable.x-lazy-datatable tr > th, .p-datatable.x-detail-datatable tr > th,
 .p-datatable.x-lazy-datatable tr > td {
   white-space: nowrap;
   /*overflow: hidden;*/
@@ -173,7 +173,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   height: 0rem;
 }
 
-/* v mobile zbytocne rozdeluje paginator na 2 riadky, zamedzime tomu */
+/* on mobile it unnecessarily splits the paginator onto 2 lines, we prevent that */
 .p-datatable .p-paginator {
   flex-wrap: nowrap;
 }
@@ -181,15 +181,15 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   white-space: nowrap;
 }
 
-/* v paginatore chceme aby div s textom Total records: xxxx mal rovnaku dlzku ako (prazdny) div na pravej strane paginatora */
+/* in the paginator we want the div with the text Total records: xxxx to have the same length as the (empty) div on the right side of the paginator */
 .p-datatable .p-paginator-left-content > div,
 .p-datatable .p-paginator-right-content > div {
   min-width: 10rem;
 }
 
-/* resizable tabulka nastavuje vsetkym bunkam (header, body, footer) overflow: hidden; co je problem pre bunku s filtrom, ktora moze obsahovat dropdown a ten je potom useknuty;
-   preto hidden v tomto pripade prebijeme
-   poznamka: toto netreba, riesi to appendTo={document.body} v Dropdown-e */
+/* a resizable table sets overflow: hidden; on all cells (header, body, footer), which is a problem for the cell with a filter, which can contain a dropdown and that dropdown is then clipped;
+   so in this case we override hidden
+   note: this is not needed, appendTo={document.body} on the Dropdown solves it */
 /*
 .p-datatable-resizable .p-datatable-thead > tr > th.p-filter-column {
   overflow: visible;
@@ -198,13 +198,13 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 
 
 /* inputs in editable datatable should be as wide as the column, second selector is for inputnumber (inputnumber has span wrapper) */
-.x-form-datatable tr > td .x-input-to-resize, .x-form-datatable tr > td .x-input-to-resize > .p-inputnumber-input {
+.x-detail-datatable tr > td .x-input-to-resize, .x-detail-datatable tr > td .x-input-to-resize > .p-inputnumber-input {
   width: 100%;
 }
 
 /* editable datatable - padding shrinked from 7px to 3px (to save space) */
-.p-datatable.p-datatable-sm.x-form-datatable .p-datatable-thead > tr > th.p-filter-column:has(div.p-column-filter),
-.p-datatable.p-datatable-sm.x-form-datatable .p-datatable-tbody > tr > td {
+.p-datatable.p-datatable-sm.x-detail-datatable .p-datatable-thead > tr > th.p-filter-column:has(div.p-column-filter),
+.p-datatable.p-datatable-sm.x-detail-datatable .p-datatable-tbody > tr > td {
   padding: 0.21rem;
 }
 
@@ -214,13 +214,13 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 }
 
 /* lazy datatable - body - not shrinked
-   (selector for .x-form-datatable with padding: 0.21rem targets lazy table opened from TableSearchField, that's why we need this selector ) */
+   (selector for .x-detail-datatable with padding: 0.21rem targets lazy table opened from TableSearchField, that's why we need this selector ) */
 .p-datatable.p-datatable-sm.x-lazy-datatable .p-datatable-tbody > tr > td {
   padding: 0.5rem;
 }
 
 /* editable datatable + lazy datatable - center checkbox in filter row */
-.p-datatable.p-datatable-sm.x-form-datatable .p-datatable-thead > tr > th.p-filter-column > div.p-column-filter > div.p-column-filter-element:has(div.p-tristatecheckbox),
+.p-datatable.p-datatable-sm.x-detail-datatable .p-datatable-thead > tr > th.p-filter-column > div.p-column-filter > div.p-column-filter-element:has(div.p-tristatecheckbox),
 .p-datatable.p-datatable-sm.x-lazy-datatable .p-datatable-thead > tr > th.p-filter-column > div.p-column-filter > div.p-column-filter-element:has(div.p-tristatecheckbox) {
   text-align: center;
 }
@@ -232,12 +232,12 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 
 /* filter-row - width 2 -> 1.25 - saving space, filter-menu-button is narrower */
 .p-column-filter-row .p-column-filter-menu-button {
-  width: 1.25rem;
+   width: 1.25rem;
 }
 
 /* filter-row - width 2.357 -> 1.25 - saving space, datepicker-button is narrower */
 .p-column-filter-row .p-calendar > .p-button.p-datepicker-trigger {
-  width: 1.25rem;
+   width: 1.25rem;
 }
 
 /* filter-row - padding 0.5 -> 0.25 - saving space, inputtext is narrower */
@@ -256,11 +256,11 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 }
 
 /* default is 100%, min-content preserves the widths of the columns (width of the datatable is sum of all columns) */
-/* bolo to tu koli tomu aby tabulka nebola roztiahnuta na celu sirku stranky
-    - min-content nastavil sirky stlpcov presne na sirku urcenu cez headerStyle na stlpci
-    - auto este navyse trosku zvecsilo stlpce ak boli dlhe labely
-    - problem - ak sme chceli scrolbar-y, tak nefungovalo zarovnanie stlpcov s header-ami
-    - riesenie - min-content sa teraz priamo zadava na komponente tabulky (LazyDataTable.DataTable)
+/* this was here so that the table would not be stretched to the full width of the page
+    - min-content set the column widths exactly to the width given via headerStyle on the column
+    - auto in addition slightly enlarged the columns if the labels were long
+    - problem - if we wanted scrollbars, the alignment of columns with headers did not work
+    - solution - min-content is now set directly on the table component (LazyDataTable.DataTable)
  */
 /*
 .p-datatable table {
@@ -303,7 +303,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   display: flex;
 }
 
-/* width: 100%; - koli search button in datatable (TableSearchField) - bez tohto flex prilis natahoval button (search button vyliezal z bunky, ak mal stlpec nastavenu custom sirku) */
+/* width: 100%; - because of the search button in the datatable (TableSearchField) - without this, flex stretched the button too much (the search button stuck out of the cell if the column had a custom width) */
 .x-search-field > .p-inputtext {
   flex: 1 1 auto;
   width: 100%;
@@ -315,18 +315,18 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   padding-right: 0.75rem;
 }
 
-/* auto complete (AutocompleteInput), plati pre vsetky autocomplete-y, aj ked sa to pridavalo len koli TableAutocompleteField */
+/* auto complete (AutocompleteInput), applies to all autocompletes, even though it was added only because of TableAutocompleteField */
 .x-auto-complete-base {
   display: flex;
-  /*max-height: 2.5rem; aby nevznikali "vysoke" autocomplete-y, ak je susedna polozka (textarea) na viac riadkov - netreba, lebo mame align-items: center; na .field.grid */
+  /*max-height: 2.5rem; so that "tall" autocompletes do not appear if a neighboring item (textarea) spans several lines - not needed, because we have align-items: center; on .field.grid */
 }
 
-/* width: 100%; - koli auto complete in datatable (TableAutocompleteField) - bez tohto bol span.p-autocomplete prilis kratky pri velmi sirokych stlpcoch */
+/* width: 100%; - because of auto complete in the datatable (TableAutocompleteField) - without this, span.p-autocomplete was too short with very wide columns */
 .x-auto-complete-base > .p-autocomplete {
   width: 100%;
 }
 
-/* width: 100%; - koli auto complete in datatable (TableAutocompleteField) - bez tohto flex prilis natahoval button (auto complete vyliezal z bunky, ak mal stlpec nastavenu custom sirku) */
+/* width: 100%; - because of auto complete in the datatable (TableAutocompleteField) - without this, flex stretched the button too much (auto complete stuck out of the cell if the column had a custom width) */
 .x-auto-complete-base > .p-autocomplete > .p-autocomplete-input {
   flex: 1 1 auto;
   width: 100%;
@@ -384,43 +384,43 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   margin: 0.7rem;
 }
 
-/* vytvori horizontalny scrollbar v suggestions paneli v autocomplete, ak su polozky sirsie ako monitor (100vw je sirka monitora) */
+/* creates a horizontal scrollbar in the autocomplete suggestions panel if the items are wider than the monitor (100vw is the monitor width) */
 .p-autocomplete-panel {
   max-width: calc(100vw - 2rem);
 }
 
-/* zvecsenie prazdnej (null) polozky v autocomplete
-  width: fit-content nastavi sirku polozky podla obsahu, spolu s predchadzajucim nastavenim vytvori horizontalny scrollbar v suggestions paneli */
+/* enlarge the empty (null) item in autocomplete
+  width: fit-content sets the item width according to the content, together with the previous setting it creates a horizontal scrollbar in the suggestions panel */
 .p-autocomplete-item {
   min-height: 2.36rem;
   width: fit-content;
 }
 
-/* uprava dialogu v ktorom sa zobrazuju Form/Browse, hlavne v AutocompleteField,
-   pozor, vyska header/footer ma vplyv na scrollovanie v dialogu */
+/* adjustment of the dialog in which Form/Browse are shown, mainly in AutocompleteField,
+   careful, the header/footer height affects scrolling in the dialog */
 .x-dialog-without-header > .p-dialog-header {
-  height: 1rem; /* potrebujeme aspon uzky header aby sme vedeli dialog presuvat */
+  height: 1rem; /* we need at least a narrow header so that we can drag the dialog */
   padding: 0rem;
 }
 
-/* uprava dialogu - posunieme close button do content oblasti (header sme dali na 0) */
+/* dialog adjustment - we move the close button into the content area (we set the header to 0) */
 .x-dialog-without-header .p-dialog-header-close {
   top: 0.5rem;
   left: -1rem;
 }
 
 .x-dialog-without-header > .p-dialog-content {
-  padding-top: 0rem; /* kedze mame header 1rem, tak hore setrime miesto */
+  padding-top: 0rem; /* because we have a 1rem header, we save space at the top */
   padding-bottom: 0.5rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  font-size: var(--app-form-font-size); /* velkost labelov fieldov v dialogu */
+  font-size: var(--app-form-font-size); /* size of field labels in the dialog */
 }
 
-/* root div pre MultilineTextField a RichTextField, ak nastavime property labelOnTop=true */
+/* root div for MultilineTextField and RichTextField, if we set the property labelOnTop=true */
 .x-inputtextarea-label-on-top, .x-editor-label-on-top {
   flex-direction: column;
-  padding-left: 0.5rem; /* ostatne fieldy v stlpci maju margin 0.5rem, tak zarovname aj tento MultilineTextField */
+  padding-left: 0.5rem; /* the other fields in the column have margin 0.5rem, so we align this MultilineTextField as well */
 }
 
 .x-inputfilelist > .p-progressbar {
@@ -429,68 +429,68 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   margin-bottom: 0.75rem;
 }
 
-/* animacia v progressbar-e bola pomala, nevedel som ju zrusit tak som ju skratil z 1s na 1ms */
+/* the animation in the progress bar was slow, I could not turn it off so I shortened it from 1s to 1ms */
 .x-inputfilelist > .p-progressbar-determinate .p-progressbar-value-animate {
   transition: width 1ms ease-in-out;
 }
 
-/* .x-form je urceny pre root div element formulara, ale zatial sa nepouziva (stlaca elementy x-form-col ak je ich viac) */
+/* .x-form is intended for the root div element of the form, but it is not used yet (it squeezes x-form-col elements if there are several of them) */
 .x-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* zvyraznenie labelu pre lazy datatable - podobne ako v x-form-header */
+/* emphasis of the label for the lazy datatable - similar to x-form-header */
 .x-lazy-datatable-label {
   margin-right: 2rem;
   font-size: var(--table-form-label-font-size);
   color: deepskyblue;
 }
 
-/* vyvazenie labelu pre lazy datatable - aby item-y v strede isli aspon priblizne do stredu */
+/* balancing the label for the lazy datatable - so that the items in the middle go at least approximately to the center */
 .x-lazy-datatable-label-right-compensation {
   width: 4rem;
 }
 
-/* podobne nastavenia ako x-form-row */
+/* similar settings as x-form-row */
 .x-form-header {
-  /* centrovanie textu */
+  /* centering the text */
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 
-  /* zvyraznenie textu */
+  /* emphasis of the text */
   margin: 0.75rem;
   font-size: var(--table-form-label-font-size);
   color: deepskyblue;
 }
 
-/* kedze je flex a defaultne ma nastavene flex-direction: row, tak vsetky svoje child elementy uklada do riadku (do row-u) */
+/* because it is flex and by default has flex-direction: row set, it places all its child elements into a row */
 .x-form-row {
   display: flex;
-  justify-content: center; /* pre projekt depaul som zmenil z space-evenly na center - nech su stlpce pokope */
+  justify-content: center; /* for the depaul project I changed it from space-evenly to center - so that the columns stay together */
   flex-wrap: wrap;
-  min-width: min-content; /* na mobile sme mali problem - ked jeho parent (FormScrollable) vytvara (aj) horizontalny scrollbar,
-                              tak tento element kopiruje sirku parenta (cize sirku mobilu) a potom zle zobrazuje scrollbar (neda sa nascrollovat obsah uplne vlavo),
-                               toto nastavenie sposobi ze ak je child element sirsi, tak sirka sa vezme z sirokeho child elementu (a nie z uzkeho parent elementu)
-                               a scrollbar funguje korektne */
+  min-width: min-content; /* on mobile we had a problem - when its parent (FormScrollable) also creates a horizontal scrollbar,
+                              this element copies the width of the parent (i.e. the mobile width) and then the scrollbar is shown badly (the content cannot be scrolled all the way to the left),
+                               this setting causes the width to be taken from the wide child element if the child element is wider (and not from the narrow parent element)
+                               and the scrollbar works correctly */
 }
 
-/* odsadime druhy, treti, stvrty, ... element v x-form-row - chceme mat medzeru medzi stlpcami - ma zmysel pre justify-content: center (projekt depaul)
-  (robi to trik ".x-form-col +" (+ = select siblings)) */
+/* we offset the second, third, fourth, ... element in x-form-row - we want a gap between the columns - it makes sense for justify-content: center (depaul project)
+  (the trick ".x-form-col +" does it (+ = select siblings)) */
 .x-form-row > .x-form-col + .x-form-col {
   margin-left: 2rem;
 }
 
-/* uklada svoje child elementy do riadku, zarovnava ich dolava (pouziva default justify-content: flex-start) */
+/* places its child elements into a row, aligns them to the left (uses the default justify-content: flex-start) */
 .x-form-inline-row {
   display: flex;
   flex-wrap: wrap;
 }
 
-/* odsadime druhy, treti, stvrty, ... element v x-form-inline-row (prvy nechame pekne zarovnany s elementami nad a pod) - robi to trik ".field.grid +" (+ = select siblings) */
-/* na mobile dame trosku uzsiu medzeru */
+/* we offset the second, third, fourth, ... element in x-form-inline-row (we leave the first one nicely aligned with the elements above and below) - the trick ".field.grid +" does it (+ = select siblings) */
+/* on mobile we use a slightly narrower gap */
 .x-form-inline-row > .field.grid + .field.grid {
   margin-left: 1rem;
 }
@@ -500,9 +500,9 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   }
 }
 
-/* na mobile margin 0rem */
+/* on mobile margin 0rem */
 .x-form-col {
-  margin: 0.7rem; /* inputy maju/mali margin-left: -0.5rem, margin-right: -0.5rem, tento margin sluzi (aj) na kompenzaciu tych minusovych marginov */
+  margin: 0.7rem; /* inputs have/had margin-left: -0.5rem, margin-right: -0.5rem, this margin also serves to compensate for those negative margins */
 }
 @media (max-width: 786px) {
   .x-form-col {
@@ -511,19 +511,19 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 }
 
 
-/* prebijeme padding 0.5rem pre p-panel-header v XFieldSetBase (skratka x-fsb-*) */
+/* we override padding 0.5rem for p-panel-header in XFieldSetBase (abbreviation x-fsb-*) */
 .p-panel.x-fsb-field-group-panel .p-panel-header {
   padding: 0rem;
   height: 0.75rem;
 }
 
-/* prebijeme padding 0.5rem pre p-panel-content v XFieldSetBase (skratka x-fsb-*) */
+/* we override padding 0.5rem for p-panel-content in XFieldSetBase (abbreviation x-fsb-*) */
 .p-panel.x-fsb-field-group-panel .p-panel-content {
   padding: 0rem;
 }
 
-/* css pre elementy v XFieldSetBase (skratka x-fsb-*) */
-/* nastavime class-y flex flex-row flex-wrap */
+/* css for elements in XFieldSetBase (abbreviation x-fsb-*) */
+/* we set the classes flex flex-row flex-wrap */
 .x-fsb-children-layout-row {
   display: flex;
   flex-direction: row;
@@ -533,7 +533,7 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 .x-fsb-field-group-panel {
 }
 
-/* label mimo header panelu - nastajlujeme podobne akokeby bol v header-i, len element musi byt kratky (taky ako child elementy)
+/* label outside the panel header - we style it similarly as if it were in the header, only the element must be short (the same as the child elements)
   #f8f9fa - Panel - header */
 .x-fsb-field-group-panel-label {
   font-weight: 600;
@@ -543,15 +543,15 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 }
 
 .x-fsb-label-button {
-  display: flex; /* aby bola ikonka za labelom v tom istom riadku ako label (flex ma default orientation row) */
-  cursor: pointer; /* simulacia buttonu */
+  display: flex; /* so that the icon after the label is on the same line as the label (flex has the default orientation row) */
+  cursor: pointer; /* button simulation */
 }
 
 .x-fsb-label-button:hover {
-  background-color: #dee2e6; /* simulacia buttonu */
+  background-color: #dee2e6; /* button simulation */
 }
 
-/* medzierka medzi labelom a colapse/expand ikonkou */
+/* a small gap between the label and the collapse/expand icon */
 .x-fsb-label-button > div.pi {
   margin-top: 0.25rem;
   margin-left: 0.25rem;
@@ -560,12 +560,12 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 .x-fsb-field-group-suppressed {
 }
 
-/* dame medzeru medzi stlpce - uplatni sa pre druhy, treti, stvrty, ... element - robi to trik "<element> + <element>" (+ = select siblings) */
+/* we put a gap between the columns - it applies to the second, third, fourth, ... element - the trick "<element> + <element>" does it (+ = select siblings) */
 .x-fsb-field-group-suppressed + .x-fsb-field-group-suppressed {
   margin-left: 2rem;
 }
 
-/* field typu checkbox, inputText (to iste co class-y: flex flex-row flex-nowrap align-items-center) */
+/* field of type checkbox, inputText (the same as the classes: flex flex-row flex-nowrap align-items-center) */
 .x-fsb-checkbox,
 .x-fsb-input-text,
 .x-fsb-input-decimal {
@@ -573,34 +573,34 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-between; /* zarovnanie checkboxu/inputu doprava */
+  justify-content: space-between; /* alignment of the checkbox/input to the right */
 }
 
 .x-fsb-checkbox-label {
-  padding: 0.5rem; /* styl p-2 */
-  /*width: 100%; - zarovnanie checkboxu doprava sme nahradili cez justify-content: space-between; */
+  padding: 0.5rem; /* style p-2 */
+  /*width: 100%; - we replaced the alignment of the checkbox to the right with justify-content: space-between; */
 }
 
 .x-fsb-checkbox-input-div {
-  padding-right: 0.5rem; /* styl p-2 */
+  padding-right: 0.5rem; /* style p-2 */
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-/* field typu inputText - povodne jednoduche riesenie "vzdy jednoriadkovy label (nowrap) a input 100% (zaberie zvysok)" nahradime zarovnanim doprava cez justify-content: space-between; + daju sa nastavit sirky labelu a inputu explicitne */
+/* field of type inputText - we replace the original simple solution "always a single-line label (nowrap) and input 100% (takes the rest)" with alignment to the right via justify-content: space-between; + the widths of the label and the input can be set explicitly */
 .x-fsb-input-text-label,
 .x-fsb-input-decimal-label {
-  padding: 0.5rem; /* styl p-2 */
+  padding: 0.5rem; /* style p-2 */
   /* white-space: nowrap; */
 }
 
-/* InputText uz ma padding: 0.5rem */
+/* InputText already has padding: 0.5rem */
 .x-fsb-input-text-input,
 .x-fsb-input-decimal-input {
   /* width: 100%; */
 }
 
-/* labels only dame do rafika (este by sme mohli dat do MultilineTextInput readOnly) */
+/* we put labels only into a frame (we could also put it into MultilineTextInput readOnly) */
 .x-fsb-labels-only {
   padding: 0.5rem;
   border: 1px solid #ced4da;
@@ -608,30 +608,30 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
 }
 
 .p-divider.p-divider-horizontal.x-row-expansion-mobile-divider {
-  margin: 0.2rem 0; /* zmensenie z 1rem na 0.2rem, pouzivane pri streetworku na mobile */
+  margin: 0.2rem 0; /* reduction from 1rem to 0.2rem, used for streetwork on mobile */
 }
 
-/* pouziva sa napr. pri tabulkach - obmedzi sirku tabulky na sirku viewport-u (okna) */
+/* used e.g. for tables - limits the table width to the viewport (window) width */
 .x-viewport-width {
   max-width: calc(100vw - 1rem);
 }
 
-/* placeholder bol cierny tak sme ho zmenili */
+/* the placeholder was black so we changed it */
 ::placeholder {
   color: darkgray;
 }
 
 /* ***** quill editor - begin */
-/* UPOZORNENIE: po prechode na PrimeReact 10.9.2 z 10.8.2 nam na elementoch vypadli p-... class-y a editor zostal cierny */
-/* tak som to tymito dvoma selectormi fixol; ked to fixnu v PrimeReact, moze sa to odstranit */
-/* chyba sa prejavuje len v Denniku otvorenom napriamo (nie v dialogu) */
+/* WARNING: after moving to PrimeReact 10.9.2 from 10.8.2 the p-... classes dropped off the elements and the editor stayed black */
+/* so I fixed it with these two selectors; when they fix it in PrimeReact, this can be removed */
+/* the bug shows up only in the Diary opened directly (not in a dialog) */
 .ql-toolbar {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   background: rgb(248, 249, 250);
 }
 
-/* fix 2 chyby v PrimeReact 10.9.2 */
+/* fix for 2 bugs in PrimeReact 10.9.2 */
 .ql-container .ql-editor {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -649,8 +649,8 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   font-family: "Comic Sans MS", cursive;
 }
 
-/* prebijeme default nastavenia pre options panel aby sa zobrazoval nad select elementom, lebo ked sa zobrazuje pod tak vytvara nezelany vertikalny scrollbar,
-   zlozity selector je tu aby sme prebili povodny (ak nemuseli pouzit important) */
+/* we override the default settings for the options panel so that it is shown above the select element, because when it is shown below it creates an unwanted vertical scrollbar,
+   the complicated selector is here so that we override the original one (and did not have to use important) */
 .ql-snow .ql-font.ql-picker.ql-expanded .ql-picker-options,
 .ql-snow .ql-size.ql-picker.ql-expanded .ql-picker-options {
   bottom: 24px;
@@ -658,36 +658,36 @@ staci nam align-items: center; na .field.grid, toto je "duplicita"
   z-index: 2;
 }
 
-/* zmensime sirku dropdownu (mame tam len cisla, napr. 12px) */
+/* we shrink the dropdown width (we only have numbers there, e.g. 12px) */
 .ql-size {
   max-width: 3rem;
 }
 
-/* zvecsime sirku dropdownu */
+/* we enlarge the dropdown width */
 .ql-font {
   min-width: 9.5rem;
 }
 /* ***** quill editor - end */
 
-/* max vysku dialogu na mobile zvysime z 90% (desktop) na 98% */
+/* on mobile we raise the max dialog height from 90% (desktop) to 98% */
 @media (max-width: 786px) {
   .p-dialog {
     max-height: 98%;
   }
 
   .p-dialog .p-dialog-content {
-    padding-bottom: 0.5rem; /* trosku zuzime padding na spodku */
+    padding-bottom: 0.5rem; /* we slightly narrow the padding at the bottom */
   }
 
   .p-tabview .p-tabview-panels {
-    padding: 0.5rem; /* trosku zmensime padding z 1rem */
+    padding: 0.5rem; /* we slightly reduce the padding from 1rem */
   }
 
   .p-panel .p-panel-header {
-    padding: 0.5rem; /* trosku zmensime padding z 1rem (koli XFieldSet v Zapis-e) */
+    padding: 0.5rem; /* we slightly reduce the padding from 1rem (because of XFieldSet in Zapis) */
   }
 
   .p-panel .p-panel-content {
-    padding: 0.5rem; /* trosku zmensime padding z 1rem (koli XFieldSet v Zapis-e)  */
+    padding: 0.5rem; /* we slightly reduce the padding from 1rem (because of XFieldSet in Zapis)  */
   }
 }

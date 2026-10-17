@@ -4,7 +4,8 @@ import {AppService} from './app.service.js';
 import {ChilibaseModule} from '@chilibase/backend/main-module';
 import {TypeOrmModule, TypeOrmModuleOptions} from "@nestjs/typeorm";
 import {MulterModule} from "@nestjs/platform-express";
-import {EntityClassOrSchema} from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type.js";
+// @nestjs/typeorm 12 keeps this type internal and blocks deep imports.
+type EntityClassOrSchema = Function;
 import {APP_GUARD} from "@nestjs/core";
 import {JwtAuthGuard} from "@chilibase/backend/auth";
 import {Auth, EnvVar} from "@chilibase/backend/env-vars";
@@ -16,8 +17,9 @@ import {FileMeta} from "@chilibase/backend/files";
 import {PostSubscriber} from "./PostSubscriber.js";
 import {ConnectionOptions, parse} from "pg-connection-string";
 
-const entities: EntityClassOrSchema[] = [BrowseMeta, ColumnMeta, FileMeta, User, EnumType, EnumValue, Parameter
+const entities: EntityClassOrSchema[] = [BrowseMeta, ColumnMeta, FileMeta, User, EnumType, EnumValue, Parameter,
   // >> add project specific entities here <<
+  //Brand, Country, Car, Ride, Client, CarReservation
 ];
 
 // since this method uses environment variables, must be called after the initialization of module ConfigModule

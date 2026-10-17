@@ -20,7 +20,7 @@ html {
 
 body {
   background-color: #282c34;
-  /*bolo: background-color: #ffffff;*/
+  /*was: background-color: #ffffff;*/
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-weight: normal;
   color: #495057;
@@ -75,9 +75,9 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-/* toto cele asi prislo s nejakym primereact example - pouziva sa (pravdepodobne) len selector .p-column-filter */
+/* all of this probably came with some primereact example - (probably) only the selector .p-column-filter is used */
 
-/* roztahuje filter na celu sirku stlpca tabulky */
+/* stretches the filter to the full width of the table column */
 .p-column-filter {
   width: 100%;
 }
@@ -194,7 +194,7 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-top: .125rem;
 }
 
-tu bol selector .p-column-filter
+here was the selector .p-column-filter
 
 .country-item {
   display: flex;
